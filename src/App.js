@@ -1,20 +1,23 @@
 import { Component } from 'react';
 import { ToastContainer } from 'react-toastify';
 import Searchbar from './Searchbar/Searchbar';
-import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
+import ImageGallery from './ImageGallery/ImageGallery';
+import Modal from './Modal/Modal';
 
 export default class App extends Component {
   state = {
     image: '',
   };
+
   handleFormSubmit = image => {
     this.setState({ image });
   };
+
   render() {
     return (
       <div>
         <Searchbar getImg={this.handleFormSubmit} />
-        <ImageGalleryItem imgItem={this.state.image} />
+        <ImageGallery imgItem={this.state.image} />
         <ToastContainer autoClose={3000} />
       </div>
     );
