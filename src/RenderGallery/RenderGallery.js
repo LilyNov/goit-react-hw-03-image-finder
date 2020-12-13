@@ -4,7 +4,7 @@ import ImageGallery from '../ImageGallery/ImageGallery';
 import imgAPI from '../service/img-api';
 import Loader from '../Loader/Loader';
 import StatusError from '../StatusError/StatusError';
-// import Button from '../Button';
+import Button from '../Button';
 
 export default class RenderGallery extends Component {
   state = {
@@ -66,7 +66,7 @@ export default class RenderGallery extends Component {
       return (
         <>
           <ImageGallery images={images.hits} />
-          {/* <Button onClick={this.onClickLoadMore} page={page} /> */}
+          <Button onClick={this.onClickLoadMore} page={page} />
         </>
       );
     }
