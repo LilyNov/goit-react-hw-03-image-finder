@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import PropTypes from 'prop-types';
 import { BiSearchAlt } from 'react-icons/bi';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -7,6 +8,10 @@ import s from '../Searchbar/Searchbar.module.css';
 export default class Searchbar extends Component {
   state = {
     image: '',
+  };
+
+  static propTypes = {
+    onSubmit: PropTypes.func.isRequired,
   };
 
   //получение значения input
@@ -29,20 +34,23 @@ export default class Searchbar extends Component {
 
   render() {
     return (
-      <div className={s.Searchbar}>
-        <form onSubmit={this.handleSubmit}>
+      <header className={s.Searchbar}>
+        <form className={s.SearchForm} onSubmit={this.handleSubmit}>
+          <button type="submit" className={s.SearchFormButton}>
+            <BiSearchAlt style={{ marginRight: 8 }} />
+          </button>
+
           <input
+            className={s.SearchFormInput}
             type="text"
-            name="image"
+            autoComplete="off"
+            autoFocus
+            placeholder="Search images and photos"
             value={this.state.image}
             onChange={this.handleNameChange}
-          ></input>
-          <button type="submit">
-            <BiSearchAlt style={{ marginRight: 8 }} />
-            Найти
-          </button>
+          />
         </form>
-      </div>
+      </header>
     );
   }
 }
