@@ -11,7 +11,6 @@ export default class ImageGalleryItem extends Component {
   static propTypes = {
     src: PropTypes.string.isRequired,
     alt: PropTypes.string.isRequired,
-    largeImageUrl: PropTypes.string.isRequired,
   };
 
   toggleModal = () => {

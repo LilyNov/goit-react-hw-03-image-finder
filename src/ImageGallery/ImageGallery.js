@@ -5,12 +5,12 @@ import PropTypes from 'prop-types';
 export default function ImageGallery({ images }) {
   return (
     <ul className={s.ItemList}>
-      {images.map((image, index) => (
+      {images.map(image => (
         <ImageGalleryItem
           src={image.webformatURL}
           alt={image.tags}
           modalImg={image.largeImageURL}
-          key={index}
+          key={image.id}
         />
       ))}
     </ul>
@@ -20,5 +20,3 @@ export default function ImageGallery({ images }) {
 ImageGallery.propTypes = {
   images: PropTypes.array.isRequired,
 };
-
-// индекс в ключ или айди??

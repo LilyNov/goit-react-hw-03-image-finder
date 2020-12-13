@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 export default function StatusError({ message }) {
   return (
     <div role="alert">
-      <p>Sorry, something went wrong. Error: {message}</p>
+      <p>Что-то пошло не так. {message}</p>
     </div>
   );
 }

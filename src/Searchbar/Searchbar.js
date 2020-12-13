@@ -10,10 +10,6 @@ export default class Searchbar extends Component {
     image: '',
   };
 
-  static propTypes = {
-    onSubmit: PropTypes.func.isRequired,
-  };
-
   //получение значения input
   handleNameChange = e => {
     this.setState({ image: e.currentTarget.value.toLowerCase() });

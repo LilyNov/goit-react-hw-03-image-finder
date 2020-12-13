@@ -6,17 +6,20 @@ import PropTypes from 'prop-types';
 export default class Button extends Component {
   static propTypes = {
     onClick: PropTypes.func.isRequired,
-    page: PropTypes.number.isRequired,
   };
 
-  scrollPageOnBtn = () => {
+  scrollPageOnBtnMore = () => {
     this.props.onClick();
     scroll.scrollToBottom();
   };
 
   render() {
     return (
-      <button onClick={this.scrollPageOnBtn} className={s.Button} type="button">
+      <button
+        onClick={this.scrollPageOnBtnMore}
+        className={s.Button}
+        type="button"
+      >
         Load more
       </button>
     );

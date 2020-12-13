@@ -4,7 +4,7 @@ import ImageGallery from '../ImageGallery/ImageGallery';
 import imgAPI from '../service/img-api';
 import Loader from '../Loader/Loader';
 import StatusError from '../StatusError/StatusError';
-import Button from '../Button';
+import Button from '../Button/Button';
 
 export default class RenderGallery extends Component {
   state = {
@@ -15,7 +15,7 @@ export default class RenderGallery extends Component {
   };
 
   static propTypes = {
-    imageName: PropTypes.string.isRequired,
+    imageName: PropTypes.string,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -23,35 +23,34 @@ export default class RenderGallery extends Component {
     const nextImg = this.props.imgItem;
     const prevPage = prevState.page;
     const nextPage = this.state.page;
+    console.log(nextPage);
+
+    if (prevImg !== nextImg) {
+      this.setState({ page: 1 });
+    }
 
     if (prevImg !== nextImg || prevPage !== nextPage) {
-      this.setState({ page: 1, status: 'pending' });
+      this.setState({ status: 'pending' });
 
       imgAPI
         .fetchImages(nextImg, nextPage)
-        .then(images => {
-          if (images.total !== 0) {
-            this.setState({ images, status: 'resolved' });
-            return;
-          }
-          return Promise.reject(new Error('Invalid request'));
-        })
-
+        .then(images => this.setState({ images, status: 'resolved' }))
         .catch(error => this.setState({ error, status: 'rejected' }));
     }
   }
 
-  onClickLoadMore = () => {
+  onClickLoadMoreBtn = () => {
+    // console.log('больше');
     this.setState(prevState => ({
       page: prevState.page + 1,
     }));
   };
 
   render() {
-    const { error, status, images, page } = this.state;
+    const { error, status, images } = this.state;
 
     if (status === 'idle') {
-      return <p>Please enter your search term</p>;
+      return <p style={{ textAlign: 'center' }}>Давай что-то найдем</p>;
     }
 
     if (status === 'pending') {
@@ -66,7 +65,7 @@ export default class RenderGallery extends Component {
       return (
         <>
           <ImageGallery images={images.hits} />
-          <Button onClick={this.onClickLoadMore} page={page} />
+          <Button onClick={this.onClickLoadMoreBtn} />
         </>
       );
     }
