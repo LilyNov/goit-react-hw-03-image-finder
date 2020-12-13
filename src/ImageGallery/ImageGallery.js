@@ -9,6 +9,7 @@ export default class ImageGallery extends Component {
     loading: false,
     error: null,
     showModal: false,
+    activImgIdx: 0,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -36,13 +37,20 @@ export default class ImageGallery extends Component {
     }
   }
 
-  toggleModal = () => {
+  toggleModal = evt => {
+    console.dir(evt.currentTarget);
     this.setState(({ showModal }) => ({ showModal: !showModal }));
   };
 
+  setActiveImgIdx = idx => {
+    this.setState({ activOptionIdx: idx });
+    console.log(idx);
+  };
+
   render() {
-    const { image, loading, error, showModal } = this.state;
+    const { image, loading, error, showModal, activImgIdx } = this.state;
     const { imgItem } = this.props;
+    const activImg = imgItem[activImgIdx];
 
     return (
       <>
@@ -51,13 +59,13 @@ export default class ImageGallery extends Component {
         {!imgItem && <p>Введите запрос</p>}
         <ul className={s.ItemList} onClick={this.toggleModal}>
           {image &&
-            image.hits.map(function ({ id, webformatURL, largeImageURL }) {
+            image.hits.map(function ({ id, webformatURL, tags }) {
               return (
                 <li className={s.ImageGalleryItem} key={id}>
                   <img
                     className={s.ImageGalleryItemImage}
                     src={webformatURL}
-                    alt=""
+                    alt={tags}
                     width="300"
                   />
                 </li>
@@ -65,14 +73,19 @@ export default class ImageGallery extends Component {
             })}
         </ul>
 
-        {showModal && (
-          <Modal onClose={this.toggleModal}>
-            {<h1>Это картинка</h1>}
-            <button type="button" onClick={this.toggleModal}>
-              Закрыть
-            </button>
-          </Modal>
-        )}
+        {showModal &&
+          image.hits.map((item, idx) => (
+            <Modal onClose={this.toggleModal}>
+              <img
+                key={item.id}
+                className={s.ImageGalleryItemImage}
+                src={activImg.largeImageURL}
+                alt=""
+                width="300"
+                onClick={() => this.setActiveImgIdx(idx)}
+              />
+            </Modal>
+          ))}
       </>
     );
   }
